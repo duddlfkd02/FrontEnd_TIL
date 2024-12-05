@@ -67,9 +67,6 @@ b = tmp;
 console.log(a, b);
 
 // 2-2-2. 구조분해 O , 변수 값 바꾸는 코드
-let c1, c2, c3, c4;
-[c1, c2, c3, c4 = "yellow"] = ["green", "blue", "purple"];
-
 let a = 10;
 let b = 5;
 
