@@ -11,16 +11,16 @@ export default function App($app) {
   const tabBar = new TabBar({
     $app,
     initialState: "",
-    onClick: async () => {
+    onClick: async (name) => {
       this.setState({
         ...this.state,
         currentTab: name,
-        photos: await request(name),
+        photos: await request(name === "all" ? "" : name),
       });
     },
   });
 
-  const content = new Content();
+  const content = new Content({ $app, initialState: [] });
 
   this.setState = (newState) => {
     this.state = newState;
