@@ -4,7 +4,7 @@ import TabBar from "./components/TabBar.js";
 
 export default function App($app) {
   this.state = {
-    currentTab: "all",
+    currentTab: window.location.pathname.replace("/", "" || "all"),
     photos: [],
   };
 
@@ -12,6 +12,7 @@ export default function App($app) {
     $app,
     initialState: "",
     onClick: async (name) => {
+      history.pushState(null, `${name} 사진`, name); // url 변경해주기
       this.setState({
         ...this.state,
         currentTab: name,
@@ -28,9 +29,23 @@ export default function App($app) {
     content.setState(this.state.photos);
   };
 
+  window.addEventListener("popstate", async () => {
+    const tabName = window.location.pathname.replace("/", "" || "all");
+    const photos = await request(tabName === "all" ? "" : tabName);
+    this.setState({
+      ...this.state,
+      currentTab: tabName,
+      photos: photos,
+    });
+    //console.log(window.location.pathname);
+  });
+
   const init = async () => {
     try {
-      const initialPhotos = await request();
+      const currentTab = this.state.currentTab;
+      const initialPhotos = await request(
+        currentTab === "all" ? "" : currentTab
+      );
       this.setState({
         ...this.state,
         photos: initialPhotos,
