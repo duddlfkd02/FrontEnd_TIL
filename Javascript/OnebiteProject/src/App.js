@@ -29,30 +29,23 @@ export default function App($app) {
     content.setState(this.state.photos);
   };
 
-  window.addEventListener("popstate", async () => {
-    const tabName = window.location.pathname.replace("/", "" || "all");
-    const photos = await request(tabName === "all" ? "" : tabName);
+  this.updateContent = async (tabName) => {
+    const currentTab = tabName === "all" ? "" : tabName;
+    const photos = await request(currentTab);
     this.setState({
       ...this.state,
       currentTab: tabName,
       photos: photos,
     });
+  };
+
+  window.addEventListener("popstate", async () => {
+    this.updateContent(window.location.pathname.replace("/", "" || "all"));
     //console.log(window.location.pathname);
   });
 
   const init = async () => {
-    try {
-      const currentTab = this.state.currentTab;
-      const initialPhotos = await request(
-        currentTab === "all" ? "" : currentTab
-      );
-      this.setState({
-        ...this.state,
-        photos: initialPhotos,
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    this.updateContent(this.state.currentTab);
   };
 
   init();
