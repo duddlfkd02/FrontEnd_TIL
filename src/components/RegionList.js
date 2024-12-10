@@ -1,6 +1,6 @@
-export default function ResionList() {
-  this.target = document.createElement("div");
-  this.target.className = "resion-list";
+export default function RegionList() {
+  this.$target = document.createElement("div");
+  this.$target.className = "region-list";
 
   this.template = () => {};
 
