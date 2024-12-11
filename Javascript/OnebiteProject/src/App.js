@@ -50,4 +50,3 @@ export default function App($app) {
 
   init();
 }
-// 연동 확인 주석입니다.
