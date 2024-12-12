@@ -3,7 +3,7 @@ import CityList from "./components/CityList.js";
 import Header from "./components/Header.js";
 import RegionList from "./components/RegionList.js";
 // api
-import { requestData } from "./components/api.js";
+import { requestData, requestCityDetail } from "./components/api.js";
 
 export default function App($app) {
   const getSortBy = () => {
@@ -30,12 +30,13 @@ export default function App($app) {
   };
 
   // 조건부 렌더링 함수
-  const render = () => {
+  const render = async () => {
     const path = this.state.currentPage;
     $app.innerHTML = "";
     if (path.startsWith("/city")) {
+      const cityId = path.split("/city/")[1];
       renderHeader();
-      renderCityDetail();
+      renderCityDetail(cityId);
     } else {
       renderHeader();
       renderCityList();
@@ -48,6 +49,7 @@ export default function App($app) {
     new Header({
       $app,
       initialState: {
+        currentPage: this.state.currentPage,
         sortBy: this.state.sortBy,
         searchWord: this.state.searchWord,
       },
@@ -151,8 +153,16 @@ export default function App($app) {
     });
   };
 
-  const renderCityDetail = () => {
-    new CityDetail();
+  const renderCityDetail = async (cityId) => {
+    try {
+      const cityDetailData = await requestCityDetail(cityId);
+      new CityDetail({
+        $app,
+        initialState: cityDetailData,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // 현재 상태 업데이트 함수
