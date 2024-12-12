@@ -15,7 +15,7 @@ export const requestData = async (startIdx, region, sortBy, searchWord) => {
     }
 
     if (searchWord) {
-      url += `$searc=${searchWord}`;
+      url += `$search=${searchWord}`;
     }
 
     const response = await fetch(url);
