@@ -29,21 +29,6 @@ export default function App($app) {
     currentPage: window.location.pathname,
   };
 
-  // 조건부 렌더링 함수
-  const render = async () => {
-    const path = this.state.currentPage;
-    $app.innerHTML = "";
-    if (path.startsWith("/city")) {
-      const cityId = path.split("/city/")[1];
-      renderHeader();
-      renderCityDetail(cityId);
-    } else {
-      renderHeader();
-      renderCityList();
-      renderRegionList();
-    }
-  };
-
   // 헤더
   const renderHeader = () => {
     new Header({
@@ -106,7 +91,7 @@ export default function App($app) {
       $app,
       initialState: this.state.region,
       handleRegion: async (region) => {
-        history.pushState(null, null, `${region}?sort=total`);
+        history.pushState(null, null, `/${region}?sort=total`);
         const cities = await requestData(0, region, "total");
         this.setState({
           ...this.state,
@@ -115,6 +100,7 @@ export default function App($app) {
           region: region,
           searchWord: "",
           cities: cities,
+          currentPage: `${region}`,
         });
       },
     });
@@ -165,42 +151,31 @@ export default function App($app) {
     }
   };
 
+  // 조건부 렌더링 함수
+  const render = async () => {
+    const path = this.state.currentPage;
+    $app.innerHTML = "";
+    if (path.startsWith("/city")) {
+      const cityId = path.split("/city/")[1];
+      renderHeader();
+      renderCityDetail(cityId);
+    } else {
+      renderHeader();
+      renderCityList();
+      renderRegionList();
+    }
+  };
+
   // 현재 상태 업데이트 함수
   this.setState = (newState) => {
     this.state = newState;
     render();
   };
 
-  // 앞뒤 이동
-  window.addEventListener("popstate", async () => {
-    const urlPath = window.location.pathname;
-
-    const prevRegion = urlPath.replace("/", "");
-    const prevPage = urlPath;
-    const prevSortBy = getSortBy();
-    const prevSearchWord = getSearchWord();
-    const prevStartIdx = 0;
-    const prevCities = await requestData(
-      prevStartIdx,
-      prevRegion,
-      prevSortBy,
-      prevSearchWord
-    );
-
-    this.setState({
-      ...this.state,
-      startIdx: prevStartIdx,
-      sortBy: prevSortBy,
-      region: prevRegion,
-      searchWord: prevSearchWord,
-      cities: prevCities,
-      currentPage: prevPage,
-    });
-  });
-
   const init = async () => {
     const path = this.state.currentPage;
-    if (!path.startsWith("/city")) {
+    //메인페이지
+    if (!path.startsWith("/city/")) {
       const cities = await requestData(
         this.state.startIdx,
         this.state.region,
@@ -216,6 +191,33 @@ export default function App($app) {
       render();
     }
   };
+
+  // 앞뒤 이동
+  window.addEventListener("popstate", async () => {
+    const urlPath = window.location.pathname;
+
+    const prevRegion = urlPath.replace("/", "");
+    const prevPage = urlPath;
+    const prevSortBy = getSortBy();
+    const prevSearchWord = getSearchWord();
+    const prevStartIdx = 0;
+    const prevCities = await request(
+      prevStartIdx,
+      prevRegion,
+      prevSortBy,
+      prevSearchWord
+    );
+
+    this.setState({
+      ...this.state,
+      startIdx: prevStartIdx,
+      sortBy: prevSortBy,
+      region: prevRegion,
+      currentPage: prevPage,
+      searchWord: prevSearchWord,
+      cities: prevCities,
+    });
+  });
 
   init();
 }

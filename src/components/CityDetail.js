@@ -77,10 +77,5 @@ export default function CityDetail({ $app, initialState }) {
     this.target.innerHTML = this.template();
   };
 
-  this.setState = (newState) => {
-    this.state = newState;
-    this.render();
-  };
-
   this.render();
 }

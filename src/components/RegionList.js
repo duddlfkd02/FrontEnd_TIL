@@ -28,8 +28,9 @@ export default function RegionList({ $app, initialState, handleRegion }) {
 
   this.render = () => {
     this.target.innerHTML = this.template();
+    let currentRegion;
     if (this.state) {
-      let currentRegion = document.getElementById(this.state);
+      currentRegion = document.getElementById(this.state);
       currentRegion && (currentRegion.className = "clicked");
     } else {
       document.getElementById("All").className = "clicked";
