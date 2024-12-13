@@ -1,0 +1,23 @@
+{
+  "name": "final",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/duddlfkd02/FrontEnd_TIL.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/duddlfkd02/FrontEnd_TIL/issues"
+  },
+  "homepage": "https://github.com/duddlfkd02/FrontEnd_TIL#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
