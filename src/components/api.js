@@ -28,3 +28,16 @@ export const requestData = async (startIndex, region, sortBy, searchWord) => {
     console.log(error);
   }
 };
+
+export const requestCityDetail = async (cityId) => {
+  try {
+    const response = await fetch(`${API_URL}city/${cityId}`);
+    if (response) {
+      let data = await response.json();
+      console.log(data);
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};

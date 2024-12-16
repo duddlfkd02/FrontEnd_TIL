@@ -1,4 +1,3 @@
-//RegionList.js
 export default function RegionList({ $app, initialState, handleRegion }) {
   this.state = initialState;
   this.$target = document.createElement("div");
