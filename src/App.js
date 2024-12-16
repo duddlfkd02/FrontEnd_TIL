@@ -7,18 +7,82 @@ import CityDetail from "./components/CityDetail.js";
 import { requestData } from "./components/api.js";
 
 export default function App($app) {
+  const getSortBy = () => {
+    if (window.location.search) {
+      return window.location.search.split("sort=")[1].split("&")[0];
+    }
+    return "total";
+  };
+
+  const getSearchWord = () => {
+    if (window.location.search && window.location.search.includes("search=")) {
+      return window.location.search.split("search=")[1];
+    }
+    return "";
+  };
+
   // 사용할 state 정의
   this.state = {
     startIndex: 0,
-    sortBy: "",
-    searchWord: "",
+    sortBy: getSortBy(),
+    searchWord: getSearchWord(),
     region: "",
     cities: "",
   };
 
   // <<컴포넌트>>
   //헤더
-  const header = new Header();
+  const header = new Header({
+    $app,
+    initialState: {
+      sortBy: this.state.sortBy,
+      searchWord: this.state.searchWord,
+    },
+    handleSortChange: async (sortBy) => {
+      const pageUrl = `/${this.state.region}?sort=${sortBy}`;
+      history.pushState(
+        null,
+        null,
+        this.state.searchWord
+          ? pageUrl + `&search=${this.state.searchWord}`
+          : pageUrl
+      );
+
+      const cities = await requestData(
+        0,
+        this.state.region,
+        sortBy,
+        this.state.searchWord
+      );
+
+      this.setState({
+        ...this.state,
+        startIndex: 0,
+        sortBy: sortBy,
+        cities: cities,
+      });
+    },
+    handleSearch: async (searchWord) => {
+      history.pushState(
+        null,
+        null,
+        `/${this.state.region}?sort=${this.state.sortBy}&search=${searchWord}`
+      );
+      const cities = await requestData(
+        0,
+        this.state.region,
+        this.state.sortBy,
+        searchWord
+      );
+
+      this.setState({
+        ...this.state,
+        startIndex: 0,
+        cities: cities,
+        searchWord: searchWord,
+      });
+    },
+  });
 
   //나라별 버튼
   const regionList = new RegionList();
@@ -52,6 +116,10 @@ export default function App($app) {
   // 상태 업데이트
   this.setState = (newState) => {
     this.state = newState;
+    header.setState({
+      sortBy: this.state.sortBy,
+      searchWord: this.state.searchWord,
+    });
     cityList.setState(this.state.cities);
   };
 
