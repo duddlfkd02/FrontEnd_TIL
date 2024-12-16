@@ -85,7 +85,22 @@ export default function App($app) {
   });
 
   //나라별 버튼
-  const regionList = new RegionList();
+  const regionList = new RegionList({
+    $app,
+    initialState: this.state.region,
+    handleRegion: async (region) => {
+      history.pushState(null, null, `/${region}?sort=total`);
+      const cities = await requestData(0, region, "total");
+      this.setState({
+        ...this.state,
+        startIndex: 0,
+        region: region,
+        sortBy: "total",
+        searchWord: "",
+        cities: cities,
+      });
+    },
+  });
 
   //나라 목록
   const cityList = new CityList({
@@ -120,6 +135,7 @@ export default function App($app) {
       sortBy: this.state.sortBy,
       searchWord: this.state.searchWord,
     });
+    regionList.setState(this.state.region);
     cityList.setState(this.state.cities);
   };
 
