@@ -1,0 +1,115 @@
+:root {
+  --xlarge: 170px;
+  --large: 28px;
+  --medium: 18px;
+  --small: 16px;
+  --xsmall: 14px;
+}
+
+body {
+  margin: 0 auto;
+  width: 100%;
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.main-container .main-wrapper {
+  text-align: center;
+}
+
+/* 시계 */
+.main-wrapper .date {
+  font-size: var(--large);
+  font-weight: 400;
+}
+.main-wrapper .time {
+  font-size: var(--xlarge);
+  font-weight: 400;
+  margin-top: -35px;
+}
+
+/* 검색 */
+.main-wrapper .search {
+  display: flex;
+  justify-content: center;
+}
+.main-wrapper #search-input {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: var(--medium);
+  padding: 15px 0px;
+  border-radius: 30px;
+  border: 0px;
+  width: 600px;
+  text-align: center;
+  margin-top: -15px;
+}
+
+.main-wrapper #search-input::placeholder {
+  color: rgb(169, 169, 169);
+  font-size: var(--medium);
+}
+
+/* 명언 */
+.quote {
+  font-size: var(--small);
+  position: fixed;
+  bottom: 0;
+  max-width: 800px;
+  padding: 0 10px;
+  margin-bottom: 20px;
+  font-weight: 300;
+  text-align: center;
+}
+
+.bookmark-open {
+  width: 240px;
+  padding: 15px 30px;
+  font-size: var(--xsmall);
+  height: 20px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.bookmark-close {
+  width: 240px;
+  padding: 15px 30px;
+  font-size: var(--xsmall);
+  height: 20px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  color: white;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.bookmark-open div {
+  cursor: pointer;
+}
+
+.bookmark-close div {
+  cursor: pointer;
+}
+
+.bookmark-bar {
+  width: 240px;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 50px;
+  right: 0px;
+  min-height: calc(100vh - 70px);
+  padding: 10px 30px;
+  color: white;
+}
