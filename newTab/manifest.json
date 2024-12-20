@@ -1,0 +1,11 @@
+{
+  "name": "Chrome newtab",
+  "description": "Made by Hayoung",
+  "version": "1.0",
+  "manifest_version": 3,
+  "permissions": ["storage"],
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+  "host_permissions": ["<all_urls>"]
+}
