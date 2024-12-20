@@ -19,6 +19,18 @@ const newBookmarkToggle = () => {
     : (newBookmarkForm.style.display = "none");
 };
 
+// 아이템 삭제
+const deleteBookmarkList = (id) => {
+  const isDelete = window.confirm("삭제하시겠습니까?");
+  if (isDelete) {
+    let bookmarkList = JSON.parse(localStorage.getItem("bookmarkList"));
+    let nowBookmarkList = bookmarkList.filter((item) => item.createAt !== id);
+    localStorage.setItem("bookmarkList", JSON.stringify(nowBookmarkList));
+    document.getElementById(`bookmark-item-${id}`).remove();
+    return;
+  }
+};
+
 // 북마크 아이템 보여주기
 const setBookmarkItem = (item) => {
   const bookmarkItem = document.createElement("div");
@@ -42,6 +54,9 @@ const setBookmarkItem = (item) => {
   const bookmarkDeleteBtn = document.createElement("div");
   bookmarkDeleteBtn.classList.add("del-btn");
   bookmarkDeleteBtn.textContent = "삭제";
+  bookmarkDeleteBtn.addEventListener("click", () => {
+    deleteBookmarkList(item.createAt);
+  });
 
   // 북마크 박스 만들기 (url 연결, 이미지, 사이트 명)
   bookmarkUrl.href = item.url;
