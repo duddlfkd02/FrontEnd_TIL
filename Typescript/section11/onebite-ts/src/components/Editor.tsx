@@ -1,10 +1,11 @@
 import { useState } from "react";
+import { useTodoDispatch } from "../App";
 
-interface Props {
-  onClickAdd: (text: string) => void;
-}
+interface Props {}
 
 function Editor(props: Props) {
+  const dispatch = useTodoDispatch();
+
   const [text, setText] = useState("");
 
   const onChageInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -12,7 +13,7 @@ function Editor(props: Props) {
   };
 
   const onClickButton = () => {
-    props.onClickAdd(text);
+    dispatch.onClickAdd(text);
     setText("");
   };
 

@@ -7,8 +7,10 @@
     "moduleResolution": "Node",
     "strict": true,
     "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true, // 기본값 가져오기(default import)를 허용
+    "esModuleInterop": true, // commonjs와 ES 모듈 간의 호환성을 높여 줌
     "jsx": "react-jsx",
     "noEmit": true
   },
-  "include": ["src"]
+  "include": ["src", "**/*.tsx"]
 }
