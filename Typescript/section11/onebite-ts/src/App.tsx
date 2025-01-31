@@ -67,7 +67,7 @@ function App() {
           <Editor />
           <div>
             {todos.map((todo) => (
-              <TodoItem key={todo.id} {...todo} />
+              <TodoItem key={todo.id} {...todo} onClickDelete={onClickDelete} />
             ))}
           </div>
         </TodoDispatchContext.Provider>
