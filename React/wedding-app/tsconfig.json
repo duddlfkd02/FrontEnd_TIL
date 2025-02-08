@@ -1,8 +1,17 @@
 {
-  "files": [],
   "extends": "./tsconfig.paths.json",
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ]
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@components/*": ["src/components/*"],
+      "@shared/*": ["src/components/shared/*"]
+    },
+    "moduleResolution": "node", // 모듈 해석 방식을 Node.js 방식으로 설정
+    "allowSyntheticDefaultImports": true, // import ... from 형식의 기본 모듈 import 허용
+    "esModuleInterop": true, // ES 모듈과 CommonJS 모듈 호환
+    "resolveJsonModule": true // JSON 파일 import 가능
+  },
+  "include": ["src", "src/**/*.tsx", "src/**/*.ts", "src/**/*.scss"] //
 }

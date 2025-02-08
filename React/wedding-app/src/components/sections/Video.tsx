@@ -1,10 +1,11 @@
+import React from "react";
 import classNames from "classnames/bind";
-import styles from "./Vedio.module.scss";
+import styles from "./Video.module.scss";
 
-import Section from "@shared/Section";
+import Section from "../shared/Section";
 
 const cx = classNames.bind(styles);
 
-function Vedio() {}
+function Video() {}
 
-export default Vedio;
+export default Video;

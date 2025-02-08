@@ -4,16 +4,15 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite && craco build",
-    "build": "tsc -b && vite build && craco build",
+    "dev": "vite",
+    "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "dev:db": "json-server --watch db.json --port=8888"
   },
   "dependencies": {
-    "@craco/craco": "^7.1.0",
+    "@types/node": "^22.13.1",
     "classnames": "^2.5.1",
-    "craco-alias": "^3.0.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "sass": "^1.84.0"
