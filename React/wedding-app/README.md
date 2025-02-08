@@ -24,3 +24,26 @@
   const result = getDay(new Date(2012, 1, 29))
   => 3
   ```
+
+### [video 태그](https://developer.mozilla.org/ko/docs/Web/HTML/Element/video)
+
+HTML < video > 요소는 비디오 플레이백을 지원하는 미디어 플레이어를 문서에 삽입한다.
+< video > 또한 < img > 요소와 비슷하게, 표시하고자 하는 미디어로의 경로를 src 특성에 제공한다.
+
+- autoplay : < video >태그 내부에 autoplay 속성이 존재한다면 비디오가 자동재생. 비활성화하려면 해당 속성을 완전히 제거해야함.
+- controls : 소리 조절(volume), 동영상 탐색(seek), 일시 정지(pause)/재시작(resume)을 할 수 있는 컨트롤러를 제공한다.
+- loop : 동영상 재생이 마친 후 자동으로 맨 처음으로 돌아감.
+- muted : 비디오에 포함되어 있는 오디오의 기본 설정을 나타내는 속성. (설정 시 오디오 나오지 않음)
+- poster : 사용자가 동영상을 재생하거나 탐색하기 전까지 출력되는 포스터 프레임 주소 (썸네일 같은 것)
+
+```jsx
+<video
+  // autoPlay={true}
+  muted={true}
+  loop={true}
+  controls={true}
+  poster="/assets/poster.jpg"
+>
+  <source src="/assets/main.mp4"></source>
+</video>
+```
