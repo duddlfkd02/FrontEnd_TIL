@@ -6,10 +6,13 @@ import { useEffect, useState } from "react";
 import FullScreenMessage from "./components/shared/FullScreenMessage";
 import Heading from "./components/sections/Heading";
 import Vedio from "./components/sections/Video";
+
+import { Wedding } from "./models/wedding";
+
 const cx = classNames.bind(styles);
 
 function App() {
-  const [wedding, setWedding] = useState("");
+  const [wedding, setWedding] = useState<Wedding | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
@@ -41,9 +44,15 @@ function App() {
     return <FullScreenMessage type="error" />;
   }
 
+  if (wedding === null) {
+    return null;
+  }
+
+  const { date } = wedding;
+
   return (
     <div className={cx("container")}>
-      <Heading />
+      <Heading date={date} />
       <Vedio />
       {JSON.stringify(wedding)}
     </div>
