@@ -8,6 +8,7 @@ import Heading from "./components/sections/Heading";
 import Vedio from "./components/sections/Video";
 
 import { Wedding } from "./models/wedding";
+import ImageGallery from "./components/sections/ImageGallery";
 
 const cx = classNames.bind(styles);
 
@@ -48,12 +49,13 @@ function App() {
     return null;
   }
 
-  const { date } = wedding;
+  const { date, galleryImages } = wedding;
 
   return (
     <div className={cx("container")}>
       <Heading date={date} />
       <Vedio />
+      <ImageGallery images={galleryImages} />
       {JSON.stringify(wedding)}
     </div>
   );
