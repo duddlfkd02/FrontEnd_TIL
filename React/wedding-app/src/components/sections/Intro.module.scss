@@ -1,0 +1,26 @@
+.container {
+  text-align: center;
+  line-height: 26px;
+  .wrap-person {
+    font-size: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    letter-spacing: 1.4px;
+    font-weight: bold;
+    margin: 42px 0 8px;
+
+    .ico-heart {
+      fill: var(--red);
+      width: 16px;
+      height: 16px;
+      margin: 0 6px;
+    }
+
+    .wrap-location {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 50px;
+    }
+  }
+}
