@@ -1,6 +1,7 @@
+@import "../../scss/utils.scss";
+
 .container {
-  text-align: center;
-  line-height: 26px;
+  @include txt-content;
   .wrap-person {
     font-size: 22px;
     display: flex;
@@ -16,11 +17,14 @@
       height: 16px;
       margin: 0 6px;
     }
+  }
 
-    .wrap-location {
-      display: flex;
-      flex-direction: column;
-      margin-bottom: 50px;
-    }
+  .ico-flower {
+    width: 20px;
+  }
+  .wrap-location {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 50px;
   }
 }

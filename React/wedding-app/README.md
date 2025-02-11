@@ -47,3 +47,32 @@ HTML < video > 요소는 비디오 플레이백을 지원하는 미디어 플레
   <source src="/assets/main.mp4"></source>
 </video>
 ```
+
+---
+
+### scss에 믹스인 적용하기
+
+- 믹스인은 여러 줄의 코드를 재활용할 수 있다. <br>
+
+  선언할 때는 `@mixin` 이라고 선언하고 , 사용하는 곳에서는 `@include`를 사용하면 된다.
+
+  ```scss
+  // 🎨 사용 선언
+  @mixin txt-content {
+    text-align: center;
+    line-height: 26px;
+  }
+
+  // 🎨 적용
+  @import "../../scss/utils.scss";
+
+  .container {
+    @include txt-content; // ⭐️
+
+    .ico-post {
+      width: 20px;
+      height: 20px;
+      margin: 72px 0 8px;
+    }
+  }
+  ```

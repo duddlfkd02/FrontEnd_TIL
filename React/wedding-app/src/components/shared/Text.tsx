@@ -9,7 +9,7 @@ function Text({ children }: { children: string }) {
       </React.Fragment>
     );
   });
-  console.log("message", message);
+  // console.log("message", message);
   return <div>{message}</div>;
 }
 

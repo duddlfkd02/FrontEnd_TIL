@@ -10,6 +10,7 @@ import Vedio from "./components/sections/Video";
 import { Wedding } from "./models/wedding";
 import ImageGallery from "./components/sections/ImageGallery";
 import Intro from "./components/sections/Intro";
+import Invitation from "./components/sections/Invitaion";
 
 const cx = classNames.bind(styles);
 
@@ -56,7 +57,7 @@ function App() {
     groom,
     bride,
     location,
-    message: { intro },
+    message: { intro, invitation },
   } = wedding;
 
   return (
@@ -70,6 +71,7 @@ function App() {
         message={intro}
         date={date}
       />
+      <Invitation message={invitation} />
       <ImageGallery images={galleryImages} />
       {JSON.stringify(wedding)}
     </div>
