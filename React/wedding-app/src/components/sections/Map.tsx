@@ -13,11 +13,15 @@ declare global {
 }
 
 function Map({ location }: { location: Location }) {
-  console.log("Kakao API Key:", import.meta.env.VITE_KAKAO_API_KEY);
-
   const mapContainer = useRef(null);
   useEffect(() => {
+    if (document.getElementById("kakao-map-script")) {
+      console.log("Kakao 지도 API가 이미 로드되었습니다.");
+      return;
+    }
+
     const script = document.createElement("script");
+    script.id = "kakao-map-script";
     script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${
       import.meta.env.VITE_KAKAO_API_KEY
     }&autoload=false`;
@@ -27,20 +31,28 @@ function Map({ location }: { location: Location }) {
     document.head.appendChild(script);
 
     script.onload = () => {
-      window.kakao.maps.load(() => {});
-      const position = new window.kakao.maps.LatLng(location.lat, location.lng);
+      window.kakao.maps.load(() => {
+        console.log("Kakao 지도 API 로드 완료!");
 
-      const options = {
-        center: position,
-        level: 3,
-      };
+        if (mapContainer.current) {
+          const position = new window.kakao.maps.LatLng(
+            location.lat,
+            location.lng
+          );
 
-      const marker = new window.kakao.maps.Marker({
-        position,
+          const options = {
+            center: position,
+            level: 3,
+          };
+
+          const map = new window.kakao.maps.Map(mapContainer.current, options);
+          const marker = new window.kakao.maps.Marker({ position });
+
+          marker.setMap(map);
+        } else {
+          console.error("mapContainer가 정의되지 않았습니다.");
+        }
       });
-
-      const map = new window.kakao.maps.Map(mapContainer.current, options);
-      marker.setMap(map);
     };
   }, [location]);
 
