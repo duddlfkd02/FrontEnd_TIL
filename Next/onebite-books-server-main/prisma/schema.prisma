@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model diaries {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user_id    String?   @default(dbgenerated("auth.uid()")) @db.Uuid
+  date       DateTime? @db.Date
+  mood       String?
+  content    String?
+  created_at DateTime  @default(now()) @db.Timestamptz(6)
+  weather    String?
+}
+model Book {
+  id Int @id @default(autoincrement())
+
+  title String
+  subTitle String
+  description String
+  author String
+  publisher String
+  coverImgUrl String
+
+  searchIndex String @default("")
+  reviews Review[]
+}
+
+model Review {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+
+  content String
+  author String
+
+  bookId Int
+  book Book @relation(fields: [bookId], references: [id], onDelete: Cascade)
+}
