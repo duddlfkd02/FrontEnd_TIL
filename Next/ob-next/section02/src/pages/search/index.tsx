@@ -1,4 +1,4 @@
-import SearchableLayout from "@/components/searchable-layout";
+import Search from "@/components/search";
 import { useRouter } from "next/router";
 import { ReactNode } from "react";
 
@@ -13,5 +13,5 @@ const SearchPage = () => {
 export default SearchPage;
 
 SearchPage.getLayout = (page: ReactNode) => {
-  return <SearchableLayout>{page}</SearchableLayout>;
+  return <Search>{page}</Search>;
 };
