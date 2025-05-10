@@ -1,55 +1,24 @@
-import { useState, useTransition } from "react";
-import "./App.css";
+import { lazy, Suspense, useState } from "react";
 
-function App() {
-  const [input, setInput] = useState("");
-  const [list, setList] = useState<string[]>([]);
-  const [isPending, startTransition] = useTransition();
+// 동적 import로 지연 로딩
+const HeavyComponent = lazy(() => import("./components/HeavyComponent"));
 
-  // useTransition 사용 여부 결정
-  const [useConcurrent, setUseConcurrent] = useState(true);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setInput(value);
-
-    const heavyWork = () => {
-      const newList = Array(10000)
-        .fill(null)
-        .map((_, i) => `${value}항목 - ${i}`);
-      setList(newList);
-    };
-
-    if (useConcurrent) {
-      startTransition(() => {
-        heavyWork();
-      });
-    } else {
-      heavyWork(); // 버벅임 발생
-    }
-  };
+const App = () => {
+  const [showHeavy, setShowHeavy] = useState(false);
 
   return (
     <div>
-      <h1>useTransition 성능 비교</h1>
-      <label>
-        <input
-          type="checkbox"
-          checked={useConcurrent}
-          onChange={() => setUseConcurrent(!useConcurrent)}
-        />
-        useTransition 사용하기
-      </label>
+      <h1>Suspense + Lazy</h1>
+      <button onClick={() => setShowHeavy(true)}>Heavy Component</button>
 
-      <input type="text" value={input} onChange={handleChange} />
-      {isPending && <p>로딩 중...</p>}
-      <ul>
-        {list.map((item, i) => (
-          <li key={i}>{item}</li>
-        ))}
-      </ul>
+      <Suspense fallback={<p>로딩 중입니다...</p>}>
+        {showHeavy && <HeavyComponent />}
+      </Suspense>
     </div>
   );
-}
+};
 
 export default App;
+
+// 데이터 로딩처리 (API fetch, 서버 요청 등) : isLoading 등 조건 분기 방식 사용
+// 컴포넌트 지연 로딩 (lazy, use()) : Suspense + fallback
