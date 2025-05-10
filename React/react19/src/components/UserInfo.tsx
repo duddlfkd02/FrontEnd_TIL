@@ -1,5 +1,5 @@
 import { use } from "react";
-import { fetchUser } from "../utils/fetchUset";
+import { fetchUser } from "../utils/fetchUser";
 
 const userPromise = fetchUser();
 
