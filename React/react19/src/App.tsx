@@ -1,13 +1,31 @@
-import OptimisticForm from "./components/OptimisticForm";
+import { useOptimistic, useState, startTransition } from "react";
+import CommentForm from "./components/OptimisticTalk/CommentForm";
+import CommentList from "./components/OptimisticTalk/CommentList";
 
-const App = () => {
+export default function App() {
+  const [comments, setComments] = useState<string[]>([]);
+  const [optimisticComments, addOptimisticComment] = useOptimistic<
+    string[],
+    string
+  >(comments, (state, newComment) => [...state, newComment]);
+
+  const handleAddComment = (comment: string) => {
+    startTransition(() => {
+      addOptimisticComment(comment);
+    });
+    setComments((prev) => [...prev, comment]);
+  };
+
   return (
-    <div>
-      <h1>React 19 useOptimistic 실습</h1>
-
-      <OptimisticForm />
+    <div className="max-w-md mx-auto p-6">
+      <h1 className="text-2xl font-semibold mb-4 text-blue-800">
+        Optimistic Talk 💬
+      </h1>
+      <CommentForm
+        onAddComment={handleAddComment}
+        onOptimisticAdd={addOptimisticComment}
+      />
+      <CommentList comments={optimisticComments} />
     </div>
   );
-};
-
-export default App;
+}
