@@ -1,21 +1,43 @@
-interface CommentListProps {
-  comments: string[];
-}
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { fetchComments } from "../../utils/fetchCommnets";
+import { deleteComment } from "../../utils/deleteComment";
 
-const CommentList = ({ comments }: CommentListProps) => {
-  if (comments.length === 0) {
-    return <p className="mt-4 text-gray-500">아직 댓글이 없습니다.</p>;
-  }
+const CommentList = () => {
+  const queryClient = useQueryClient();
+
+  const {
+    data: comments,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["comments"],
+    queryFn: fetchComments,
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: deleteComment,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["comments"] });
+    },
+  });
+
+  if (isLoading) return <p>로딩중입니다...</p>;
+  if (isError) return <p>오류 발생 : {error.message}</p>;
 
   return (
     <div>
       <ul>
-        {comments.map((comment, index) => (
+        {comments.map((comment: { id: number; text: string }) => (
           <li
-            key={index}
-            className="bg-gray-100 text-gray-800 px-4 py-2 rounded shadow-sm"
+            key={comment.id}
+            className="bg-gray-100 text-gray-800 px-4 py-2 rounded shadow-sm flex justify-between"
           >
-            {comment}
+            {comment.text}
+
+            <button onClick={() => deleteMutation.mutate({ id: comment.id })}>
+              ❌
+            </button>
           </li>
         ))}
       </ul>
